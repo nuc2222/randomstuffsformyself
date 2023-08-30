@@ -1,0 +1,8 @@
+this bot is made specal for fun. updates almost every single day. sry if its not online sometime its bc i dont have an server to run it on only a pc.
+invite linl: https://discord.com/api/oauth2/authorize?client_id=1145447334113710090&permissions=8&scope=bot
+this bot current features:
+free nitr emoji cmds
+small amount of moderation cmds
+fun and funny cmds
+game cmds
+and file database (youre data while useing the bot will not be lost on restart exept for login)
