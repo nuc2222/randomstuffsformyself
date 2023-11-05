@@ -5,16 +5,28 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js" type="text/javascript"></script>
     <style>
         #editor {
-            height: 300px;
+            height: 500px; /* Increased height for the editor */
             width: 80%;
             margin: auto;
             border: 1px solid #ccc;
         }
         #executeButton {
-            display: block;
-            margin: 20px auto;
+            position: fixed;
+            bottom: 10px;
+            right: 10px; /* Moved to the bottom-right corner */
             padding: 10px 20px;
             background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #installButton {
+            position: fixed;
+            bottom: 10px;
+            right: 100px; /* Positioned next to the execute button */
+            padding: 10px 20px;
+            background-color: #008CBA;
             color: white;
             border: none;
             border-radius: 4px;
@@ -25,21 +37,30 @@
 <body>
     <div id="editor">Write your code here</div>
     <button id="executeButton">Execute</button>
+    <input type="text" id="libraryInput" placeholder="Library to install">
+    <button id="installButton">Install</button>
 
     <script>
         var editor = ace.edit("editor");
         editor.setTheme("ace/theme/monokai");
-        editor.session.setMode("ace/mode/javascript");
+        editor.session.setMode("ace/mode/python");
 
         document.getElementById('executeButton').addEventListener('click', function() {
             var code = editor.getValue();
-            sendCodeToServer(code);
+            sendCodeToServer('/execute', code);
         });
 
-        function sendCodeToServer(code) {
-            fetch('/execute', {
+        document.getElementById('installButton').addEventListener('click', function() {
+            var library = document.getElementById('libraryInput').value;
+            if (library) {
+                sendCodeToServer('/execute', "import os; os.system('pip install " + library + "')");
+            }
+        });
+
+        function sendCodeToServer(endpoint, code) {
+            fetch(endpoint, {
                 method: 'POST',
-                body: 'code=' + encodeURIComponent(code),  // Ensure the code is sent as 'code=<your_encoded_code>'
+                body: 'code=' + encodeURIComponent(code),
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
