@@ -37,12 +37,11 @@
         });
 
         function sendCodeToServer(code) {
-            // Use Fetch API to send code to server
-            fetch('/execute', {
+            fetch('/execute', {  // Updated endpoint to /execute
                 method: 'POST',
-                body: JSON.stringify({ code: code }),
+                body: 'code=' + encodeURIComponent(code),  // Sending code as form data
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 }
             })
             .then(response => {
