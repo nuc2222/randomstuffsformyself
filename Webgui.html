@@ -37,9 +37,9 @@
         });
 
         function sendCodeToServer(code) {
-            fetch('/execute', {  // Updated endpoint to /execute
+            fetch('/execute', {
                 method: 'POST',
-                body: 'code=' + encodeURIComponent(code),  // Sending code as form data
+                body: 'code=' + encodeURIComponent(code),  // Ensure the code is sent as 'code=<your_encoded_code>'
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
