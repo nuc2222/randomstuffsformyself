@@ -32,10 +32,18 @@
             border-radius: 4px;
             cursor: pointer;
         }
+        #libraryInput {
+            position: fixed;
+            bottom: 10px;
+            right: 210px; /* Positioned to the left of the install button */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
-    <div id="editor">Write your code here</div>
+    <div id="editor">print('hello world')</div>
     <button id="executeButton">Execute</button>
     <input type="text" id="libraryInput" placeholder="Library to install">
     <button id="installButton">Install</button>
