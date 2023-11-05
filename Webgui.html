@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Code Executor</title>
+    <title>Code Editor</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js" type="text/javascript"></script>
     <style>
         body {
@@ -30,6 +30,18 @@
             right: 10px;
             background-color: #4CAF50;
         }
+        #installButton {
+            right: 100px;
+            background-color: #008CBA;
+        }
+        #libraryInput {
+            position: fixed;
+            bottom: 10px;
+            right: 210px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
         #output {
             position: fixed;
             bottom: 10px;
@@ -43,8 +55,10 @@
     </style>
 </head>
 <body>
-    <div id="editor">print('Hello, World!')</div>
+    <div id="editor">print('hello world')</div>
     <button id="executeButton">Execute</button>
+    <input type="text" id="libraryInput" placeholder="Library to install">
+    <button id="installButton">Install</button>
     <div id="output"></div>
 
     <script>
@@ -55,6 +69,13 @@
         document.getElementById('executeButton').addEventListener('click', function() {
             var code = editor.getValue();
             sendCodeToServer('/execute', code);
+        });
+
+        document.getElementById('installButton').addEventListener('click', function() {
+            var library = document.getElementById('libraryInput').value;
+            if (library) {
+                sendCodeToServer('/execute', "import os; os.system('pip install " + library + "')");
+            }
         });
 
         function sendCodeToServer(endpoint, code) {
