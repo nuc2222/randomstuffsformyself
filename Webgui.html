@@ -1,1 +1,64 @@
-hello
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Code Editor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js" type="text/javascript"></script>
+    <style>
+        #editor {
+            height: 300px;
+            width: 80%;
+            margin: auto;
+            border: 1px solid #ccc;
+        }
+        #executeButton {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="editor">Write your code here</div>
+    <button id="executeButton">Execute</button>
+
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/javascript");
+
+        document.getElementById('executeButton').addEventListener('click', function() {
+            var code = editor.getValue();
+            sendCodeToServer(code);
+        });
+
+        function sendCodeToServer(code) {
+            // Use Fetch API to send code to server
+            fetch('/execute', {
+                method: 'POST',
+                body: JSON.stringify({ code: code }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Execution failed');
+                }
+            })
+            .then(data => {
+                console.log(data); // Handle the response from the server
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
