@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web Terminal</title>
+</head>
+<body>
+    <form action="/command" method="post">
+        <input type="text" name="command" placeholder="Enter command">
+        <input type="submit" value="Run">
+    </form>
+    <div>
+        <textarea rows="10" cols="50" id="output" readonly></textarea>
+    </div>
+    <script>
+        const form = document.querySelector('form');
+        const output = document.getElementById('output');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const response = await fetch('/command', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.text();
+            output.value = data;
+        });
+    </script>
+</body>
+</html>
