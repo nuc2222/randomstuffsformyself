@@ -1,0 +1,3 @@
+npermission.denied
+terminal.file.find.fail
+fatal.error
